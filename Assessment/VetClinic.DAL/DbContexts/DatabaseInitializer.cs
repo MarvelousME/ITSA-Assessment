@@ -41,18 +41,18 @@ namespace VetClinic.DAL.DbContexts
         {
             if (!await _context.Users.AnyAsync())
             {
-                _logger.LogInformation("Generating inbuilt accounts");
+                _logger.LogInformation("Generating default user accounts");
 
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
 
-                await EnsureRoleAsync(adminRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
-                await EnsureRoleAsync(userRoleName, "Default user", new string[] { });
+                await EnsureRoleAsync(adminRoleName, "administrator", ApplicationPermissions.GetAllPermissionValues());
+                await EnsureRoleAsync(userRoleName, "user", new string[] { });
 
-                await CreateUserAsync("admin", "tempP@ss123", "Inbuilt Administrator", "admin@ebenmonney.com", "+1 (123) 000-0000", new string[] { adminRoleName });
-                await CreateUserAsync("user", "tempP@ss123", "Inbuilt Standard User", "user@ebenmonney.com", "+1 (123) 000-0001", new string[] { userRoleName });
+                await CreateUserAsync("admin", "tempP@ss123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
+                await CreateUserAsync("user", "tempP@ss123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
 
-                _logger.LogInformation("Inbuilt account generation completed");
+                _logger.LogInformation("Default account generation completed");
             }
         }
 
