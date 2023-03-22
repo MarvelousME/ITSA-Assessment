@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using VetClinic.DAL.Models.Interfaces;
 
 namespace VetClinic.DAL.Models
 {
-    public class PetOwner
+    public class PetOwner : IAuditableEntity
     {
         [Key]
         public int? Id { get; set; }
@@ -31,8 +32,9 @@ namespace VetClinic.DAL.Models
         [MaxLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [Display(Name = "ID Number")]
         public string IDNumber { get; set; }
-
-        [NotMapped]
-        public DateTime? Created { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
     }
 }
