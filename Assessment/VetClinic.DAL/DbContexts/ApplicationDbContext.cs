@@ -21,8 +21,8 @@ namespace VetClinic.DAL.DbContexts
         public DbSet<PetDetail> PetDetails { get; set; }
         public DbSet<Breed> Breeds { get; set; }
         public DbSet<AnimalType> AnimalTypes { get; set; }
-
-
+        public DbSet<Visit> Visits { get; set; }
+        public DbSet<Vet> Vets { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -69,7 +69,7 @@ namespace VetClinic.DAL.DbContexts
             builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
 
             //One to many relationship
-            builder.Entity<PetOwner>().HasMany(r => r.PetDetails).WithOne().HasForeignKey(r => r.PetOwnerId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+            //builder.Entity<PetOwner>().HasMany(r => r.PetDetails).WithOne().HasForeignKey(r => r.PetOwnerId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         }
 

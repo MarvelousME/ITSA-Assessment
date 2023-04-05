@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VetClinic.DAL.DbContexts;
 
@@ -11,9 +12,10 @@ using VetClinic.DAL.DbContexts;
 namespace VetClinic.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230405131229_AddVieiwModelsWithIsActiveAndSoftDelete")]
+    partial class AddVieiwModelsWithIsActiveAndSoftDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -507,9 +509,13 @@ namespace VetClinic.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Owner")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PetOwnerId")
+                    b.Property<int>("PetOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PetOwnerId1")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -525,6 +531,8 @@ namespace VetClinic.Api.Migrations
                     b.HasIndex("BreedId");
 
                     b.HasIndex("PetOwnerId");
+
+                    b.HasIndex("PetOwnerId1");
 
                     b.ToTable("PetDetails");
                 });
@@ -700,87 +708,6 @@ namespace VetClinic.Api.Migrations
                     b.ToTable("AppProductCategories", (string)null);
                 });
 
-            modelBuilder.Entity("VetClinic.DAL.Models.Vet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MedicalLicense")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vets");
-                });
-
-            modelBuilder.Entity("VetClinic.DAL.Models.Visit", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("PetDetailId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("VetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PetDetailId");
-
-                    b.HasIndex("VetId");
-
-                    b.ToTable("Visits");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("VetClinic.DAL.Models.ApplicationRole", null)
@@ -882,9 +809,15 @@ namespace VetClinic.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VetClinic.DAL.Models.PetOwner", "PetOwner")
+                    b.HasOne("VetClinic.DAL.Models.PetOwner", null)
                         .WithMany("PetDetails")
-                        .HasForeignKey("PetOwnerId");
+                        .HasForeignKey("PetOwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VetClinic.DAL.Models.PetOwner", "PetOwner")
+                        .WithMany()
+                        .HasForeignKey("PetOwnerId1");
 
                     b.Navigation("AnimalType");
 
@@ -909,21 +842,6 @@ namespace VetClinic.Api.Migrations
                     b.Navigation("Parent");
 
                     b.Navigation("ProductCategory");
-                });
-
-            modelBuilder.Entity("VetClinic.DAL.Models.Visit", b =>
-                {
-                    b.HasOne("VetClinic.DAL.Models.PetDetail", "PetDetail")
-                        .WithMany()
-                        .HasForeignKey("PetDetailId");
-
-                    b.HasOne("VetClinic.DAL.Models.Vet", "Vet")
-                        .WithMany()
-                        .HasForeignKey("VetId");
-
-                    b.Navigation("PetDetail");
-
-                    b.Navigation("Vet");
                 });
 
             modelBuilder.Entity("VetClinic.DAL.Models.ApplicationRole", b =>

@@ -13,6 +13,7 @@ using VetClinic.Core.Permissions;
 using VetClinic.DAl.Managers;
 using VetClinic.DAL.DbContexts;
 using VetClinic.DAL.Interfaces;
+using VetClinic.DAL.Managers;
 using VetClinic.DAL.Models;
 using VetClinic.DAL.UnitOfWork;
 using VetClinic.DAL.UnitOfWork.Interfaces;
@@ -113,6 +114,7 @@ namespace VetClinic.Api.Helpers
 
             builder.Services.AddAuthorization(options =>
             {
+                ///TODO: Add Policies for authorization
                 options.AddPolicy(Policies.ViewAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewUsers));
                 options.AddPolicy(Policies.ManageAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManageUsers));
 
@@ -160,6 +162,7 @@ namespace VetClinic.Api.Helpers
             // Repositories
             builder.Services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             builder.Services.AddScoped<IAccountManager, AccountManager>();
+            builder.Services.AddScoped<IPetOwnerManager, PetOwnerManager>();
 
             // Auth Handlers
             builder.Services.AddSingleton<IAuthorizationHandler, ViewUserAuthorizationHandler>();

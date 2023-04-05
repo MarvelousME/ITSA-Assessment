@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public string MedicalLicense { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

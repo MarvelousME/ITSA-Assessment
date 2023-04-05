@@ -48,6 +48,25 @@ namespace VetClinic.DAL.Managers
                 .ToList();
         }
 
+        public async Task<(PetOwner petOwner, string[] PetDetailIds)?> GetPetOwnerAndPetDetailsAsync(int petownerId)
+        {
+            var petowner = await _context.PetOwners
+                .Include(u => u.PetDetails)
+                .Where(u => u.Id == petownerId)
+                .SingleOrDefaultAsync();
+
+            if (petowner == null)
+                return null;
+
+            var petownerPetDetailIds = petowner.PetDetails.Select(r => r.Id).ToList();
+
+            var petDetails = await _context.PetDetails
+                .Where(r => petownerPetDetailIds.Contains(r.Id))
+                .Select(r => r.Name)
+                .ToArrayAsync();
+
+            return (petowner, petDetails);
+        }
 
         //public async Task<(bool Succeeded, string[] Errors)> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles, string password)
         //{

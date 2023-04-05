@@ -10,7 +10,7 @@ using VetClinic.DAL.Repositories.Interfaces;
 
 namespace VetClinic.DAL.Repositories
 {
-    public class BreedRepository : Repository<Visit>, IBreedRepository
+    public class BreedRepository : Repository<Breed>, IBreedRepository
     {
         public BreedRepository(DbContext context) : base(context)
         { }

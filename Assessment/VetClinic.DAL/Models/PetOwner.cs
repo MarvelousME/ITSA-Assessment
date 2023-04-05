@@ -32,6 +32,8 @@ namespace VetClinic.DAL.Models
         [MaxLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [Display(Name = "ID Number")]
         public string IDNumber { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

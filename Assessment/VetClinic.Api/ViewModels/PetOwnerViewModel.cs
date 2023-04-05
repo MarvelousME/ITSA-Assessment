@@ -30,6 +30,10 @@ namespace VetClinic.Api.ViewModels
         //public string UpdatedBy { get; set; }
         //public DateTime CreatedDate { get; set; }
         //public DateTime UpdatedDate { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public string[] PetDetailIds { get; set; }
 
         //Associated Pet to Pet Owner
         public ICollection<PetDetailViewModel> PetDetails { get; set; } = new List<PetDetailViewModel>();
