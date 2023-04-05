@@ -51,7 +51,7 @@ namespace VetClinic.Api.Helpers
 
             var authServerUrl = builder.Configuration["AuthServerUrl"].TrimEnd('/');
 
-            string migrationsAssembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name; //VetClinicSolution
+            string migrationsAssembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString, b => b.MigrationsAssembly(migrationsAssembly)));
@@ -74,9 +74,9 @@ namespace VetClinic.Api.Helpers
                 //options.Password.RequireUppercase = true;
                 //options.Password.RequireLowercase = false;
 
-                //// Lockout settings
-                //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                //options.Lockout.MaxFailedAccessAttempts = 10;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
             });
 
             // Adds IdentityServer.

@@ -16,15 +16,13 @@ namespace VetClinic.DAL.UnitOfWork
         IPetDetailRepository _petdetails;
         IVetRepository _vets;
         IVisitRepository _visits;
-
-
+        IAnimalTypeRepository _animaltypes;
+        IBreedRepository _breeds;
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
         }
-
-
 
         public ICustomerRepository Customers
         {
@@ -37,8 +35,6 @@ namespace VetClinic.DAL.UnitOfWork
             }
         }
 
-
-
         public IProductRepository Products
         {
             get
@@ -49,8 +45,6 @@ namespace VetClinic.DAL.UnitOfWork
                 return _products;
             }
         }
-
-
 
         public IOrdersRepository Orders
         {
@@ -104,6 +98,28 @@ namespace VetClinic.DAL.UnitOfWork
                     _visits = new VisitRepository(_context);
 
                 return _visits;
+            }
+        }
+
+        public IAnimalTypeRepository AnimalTypes
+        {
+            get
+            {
+                if (_animaltypes == null)
+                    _animaltypes = new AnimalTypeRepository(_context);
+
+                return _animaltypes;
+            }
+        }
+
+        public IBreedRepository Breeds
+        {
+            get
+            {
+                if (_breeds == null)
+                    _breeds = new BreedRepository(_context);
+
+                return _breeds;
             }
         }
 

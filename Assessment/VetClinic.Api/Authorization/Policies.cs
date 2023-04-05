@@ -4,6 +4,12 @@
     {
         public const string ViewAllPetOwnersPolicy = "View All Pet Owners";
 
+        public const string ViewAllPetDetailsPolicy = "View All Pet Details";
+
+        public const string ViewAllVetsPolicy = "View All Vets";
+
+        public const string ViewAllVisitsPolicy = "View All Visits";
+
         ///<summary>Policy to allow viewing all user records.</summary>
         public const string ViewAllUsersPolicy = "View All Users";
 
