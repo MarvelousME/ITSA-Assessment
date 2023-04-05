@@ -12,8 +12,9 @@ import { LoginResponse } from '../models/login-response.model';
 @Injectable()
 export class OidcHelperService {
 
-  private readonly clientId = 'vetclinic_api';
-  private readonly scope = 'openid email phone profile offline_access roles vetclinic_spa';
+  private readonly clientId = 'vetclinic_spa';
+  private readonly scope = 'vetclinic_api';
+  /*private readonly scope = 'openid email phone profile offline_access roles vetclinic_spa vetclinic_api';*/
 
   private readonly tokenEndpoint = 'https://localhost:5001/connect/token';
 
@@ -38,7 +39,7 @@ export class OidcHelperService {
       .append('password', password)
       .append('client_id', this.clientId)
       .append('grant_type', 'password')
-      .append('scope', 'vetclinic_api');
+      .append('scope', this.scope);
       /*.append('scope', this.scope);*/
 
     return this.http.post<LoginResponse>(this.tokenEndpoint, params, { headers: header });

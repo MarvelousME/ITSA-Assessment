@@ -4,6 +4,10 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Description>Tests for the VetClinic Solution</Description>
+    <Copyright>Copyright © 2022 ITSA Assessment</Copyright>
+    <PackageProjectUrl>https://github.com/MarvelousME/ITSA-Assessment</PackageProjectUrl>
+    <Company>ITSA Assessment</Company>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>

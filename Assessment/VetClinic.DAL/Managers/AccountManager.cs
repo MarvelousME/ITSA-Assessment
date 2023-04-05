@@ -235,11 +235,6 @@ namespace VetClinic.DAl.Managers
             return (result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
         }
 
-
-
-
-
-
         public async Task<ApplicationRole> GetRoleByIdAsync(string roleId)
         {
             return await _roleManager.FindByIdAsync(roleId);

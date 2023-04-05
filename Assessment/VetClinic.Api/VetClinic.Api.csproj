@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>54519b7e-589f-48d1-92de-19544efe164a</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <Description>Data Access Layer for the VetClinic Solution</Description>
+    <Copyright>Copyright © 2022 ITSA Assessment</Copyright>
+    <PackageProjectUrl>https://github.com/MarvelousME/ITSA-Assessment</PackageProjectUrl>
+    <Company>ITSA Assessment</Company>
   </PropertyGroup>
 
   <ItemGroup>

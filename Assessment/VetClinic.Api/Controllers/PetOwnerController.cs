@@ -32,7 +32,7 @@ namespace VetClinic.Api.Controllers
         [HttpGet("petowners/{pageNumber:int}/{pageSize:int}")]
         //[Authorize(Authorization.Policies.ViewAllPetOwnersPolicy)]
         [ProducesResponseType(200, Type = typeof(List<PetOwnerViewModel>))]
-        public async Task<IActionResult> GetPetOwners(int pageNumber = 0, int pageSize = 10)
+        public async Task<IActionResult> GetPetOwners(int pageNumber = 1, int pageSize = 10)
         {
             var petownersAndPetDetails = await _petownerManager.GetPetOwnersAndPetDetailsAsync(pageNumber, pageSize);
 

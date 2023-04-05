@@ -114,9 +114,21 @@ namespace VetClinic.Api.Helpers
 
             builder.Services.AddAuthorization(options =>
             {
-                ///TODO: Add Policies for authorization
                 options.AddPolicy(Policies.ViewAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewUsers));
                 options.AddPolicy(Policies.ManageAllUsersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManageUsers));
+
+                options.AddPolicy(Policies.ViewAllVisitsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewVisits));
+                options.AddPolicy(Policies.ManageAllVisitsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManageVisits));
+
+                options.AddPolicy(Policies.ViewAllPetOwnersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewPetOwners));
+                options.AddPolicy(Policies.ManageAllPetOwnersPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManagePetOwners));
+
+                options.AddPolicy(Policies.ViewAllPetDetailsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewPetDetails));
+                options.AddPolicy(Policies.ManageAllPetDetailsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManagePetDetails));
+                
+                options.AddPolicy(Policies.ViewAllVetsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewVets));
+                options.AddPolicy(Policies.ManageAllVetsPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ManageVets));
+
 
                 options.AddPolicy(Policies.ViewAllRolesPolicy, policy => policy.RequireClaim(ClaimConstants.Permission, ApplicationPermissions.ViewRoles));
                 options.AddPolicy(Policies.ViewRoleByRoleNamePolicy, policy => policy.Requirements.Add(new ViewRoleAuthorizationRequirement()));
@@ -159,10 +171,12 @@ namespace VetClinic.Api.Helpers
             // Business Services
             builder.Services.AddScoped<IEmailSender, EmailSender>();
 
-            // Repositories
+            // Repositories (Managers)
             builder.Services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             builder.Services.AddScoped<IAccountManager, AccountManager>();
             builder.Services.AddScoped<IPetOwnerManager, PetOwnerManager>();
+            builder.Services.AddScoped<IVetManager, VetManager>();
+            builder.Services.AddScoped<IVisitManager, VisitManager>();
 
             // Auth Handlers
             builder.Services.AddSingleton<IAuthorizationHandler, ViewUserAuthorizationHandler>();
