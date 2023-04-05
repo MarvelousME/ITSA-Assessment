@@ -11,7 +11,8 @@ namespace VetClinic.DAL.UnitOfWork.Interfaces
         IPetDetailRepository PetDetails { get; }
         IVetRepository Vets { get; }
         IVisitRepository Visits { get; }
-
+        IBreedRepository Breeds { get; }
+        IAnimalTypeRepository AnimalTypes { get; }
 
 
         int SaveChanges();
