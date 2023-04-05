@@ -1,35 +1,21 @@
 using VetClinic.Api.Helpers;
 
+#region Add services to the container
 var builder = WebApplication.CreateBuilder(args);
 
-Utilities.AddServices(builder);// Add services to the container.
+// Add services to the container
+Utilities.AddServices(builder);
 
 var app = builder.Build();
-Utilities.ConfigureRequestPipeline(app); // Configure the HTTP request pipeline.
+#endregion
 
-Utilities.SeedDatabase(app); //Seed initial database
+#region Configure the HTTP request pipeline And Seed Database
+// Configure the HTTP request pipeline
+Utilities.ConfigureRequestPipeline(app);
 
-//// Add services to the container.
-//Utilities.AddServices(builder);// Add services to the container.
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
+// Seed database
+Utilities.SeedDatabase(app);
+#endregion
 
 app.Run();
 

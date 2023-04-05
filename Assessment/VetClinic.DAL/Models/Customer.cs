@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using VetClinic.DAl.Core;
+using VetClinic.Core.Enums;
 
-namespace VetClinic.DAl.Models
+namespace VetClinic.DAL.Models
 {
     public class Customer : AuditableEntity
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using VetClinic.DAL.Repositories.Interfaces;
 
-namespace VetClinic.DAl.Repositories
+namespace VetClinic.DAL.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

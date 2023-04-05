@@ -1,7 +1,6 @@
-﻿using VetClinic.DAl.Models;
-using VetClinic.DAL.Repositories.Interfaces;
+﻿using VetClinic.DAL.Models;
 
-namespace VetClinic.DAl.Repositories.Interfaces
+namespace VetClinic.DAL.Repositories.Interfaces
 {
     public interface IOrdersRepository : IRepository<Order>
     {

@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using VetClinic.DAl.Models;
-using VetClinic.DAl.Repositories.Interfaces;
 using VetClinic.DAL.DbContexts;
+using VetClinic.DAL.Models;
+using VetClinic.DAL.Repositories.Interfaces;
 
-namespace VetClinic.DAl.Repositories
+namespace VetClinic.DAL.Repositories
 {
     public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {

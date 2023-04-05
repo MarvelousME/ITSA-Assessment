@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using VetClinic.DAl.Core;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Permissions;
+using VetClinic.DAL.Models;
 
 namespace VetClinic.Api.ViewModels
 {
@@ -41,6 +41,13 @@ namespace VetClinic.Api.ViewModels
 
             CreateMap<IdentityRoleClaim<string>, PermissionViewModel>()
                 .ConvertUsing(s => (PermissionViewModel)ApplicationPermissions.GetPermissionByValue(s.ClaimValue));
+
+            CreateMap<PetOwner, PetOwnerViewModel>()
+                .ReverseMap();
+
+
+            CreateMap<PetDetail, PetDetailViewModel>()
+                .ReverseMap();
 
             CreateMap<Customer, CustomerViewModel>()
                 .ReverseMap();

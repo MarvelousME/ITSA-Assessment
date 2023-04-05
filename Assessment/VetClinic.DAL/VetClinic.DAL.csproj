@@ -6,12 +6,20 @@
     <Description>Data Access Layer for the VetClinic Solution</Description>
     <Copyright>Copyright © 2022 ITSA Assessment</Copyright>
     <PackageProjectUrl>https://github.com/MarvelousME/ITSA-Assessment</PackageProjectUrl>
-    <Company></Company>
+    <Company>ITSA Assessment</Company>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\IVetClinicManager.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VetClinic.Core\VetClinic.Core.csproj" />
   </ItemGroup>
 
 </Project>

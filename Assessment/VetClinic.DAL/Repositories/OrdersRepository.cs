@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VetClinic.DAl.Models;
-using VetClinic.DAl.Repositories.Interfaces;
 using VetClinic.DAL.DbContexts;
+using VetClinic.DAL.Models;
+using VetClinic.DAL.Repositories.Interfaces;
 
-namespace VetClinic.DAl.Repositories
+namespace VetClinic.DAL.Repositories
 {
     public class OrdersRepository : Repository<Order>, IOrdersRepository
     {

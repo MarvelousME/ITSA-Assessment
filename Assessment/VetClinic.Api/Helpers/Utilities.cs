@@ -8,10 +8,12 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Security.Claims;
 using VetClinic.Api.Authorization;
-using VetClinic.DAl.Core;
-using VetClinic.DAl.Core.Interfaces;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Constants;
+using VetClinic.Core.Permissions;
+using VetClinic.DAl.Managers;
 using VetClinic.DAL.DbContexts;
+using VetClinic.DAL.Interfaces;
+using VetClinic.DAL.Models;
 using VetClinic.DAL.UnitOfWork;
 using VetClinic.DAL.UnitOfWork.Interfaces;
 
@@ -237,9 +239,9 @@ namespace VetClinic.Api.Helpers
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogCritical(LoggingEvents.INIT_DATABASE, ex, LoggingEvents.INIT_DATABASE.Name);
+                    logger.LogCritical(LoggingEvents.INITIALISE_DATABASE, ex, LoggingEvents.INITIALISE_DATABASE.Name);
 
-                    throw new Exception(LoggingEvents.INIT_DATABASE.Name, ex);
+                    throw new Exception(LoggingEvents.INITIALISE_DATABASE.Name, ex);
                 }
             }
         }

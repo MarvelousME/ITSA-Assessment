@@ -1,4 +1,4 @@
-﻿namespace VetClinic.DAl.Core
+﻿namespace VetClinic.Core.Enums
 {
     public enum Gender
     {

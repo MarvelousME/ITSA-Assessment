@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using VetClinic.DAL.Models.Interfaces;
 
-namespace VetClinic.DAl.Models
+namespace VetClinic.DAL.Models
 {
     public class ApplicationUser : IdentityUser, IAuditableEntity
     {

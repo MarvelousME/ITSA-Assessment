@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using VetClinic.Api.Authorization;
 using VetClinic.Api.Helpers;
 using VetClinic.Api.ViewModels;
-using VetClinic.DAl.Core;
-using VetClinic.DAl.Core.Interfaces;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Permissions;
+using VetClinic.DAL.Interfaces;
+using VetClinic.DAL.Models;
 
 namespace VetClinic.Api.Controllers
 {

@@ -1,6 +1,6 @@
-﻿using VetClinic.DAl.Repositories;
-using VetClinic.DAl.Repositories.Interfaces;
-using VetClinic.DAL.DbContexts;
+﻿using VetClinic.DAL.DbContexts;
+using VetClinic.DAL.Repositories;
+using VetClinic.DAL.Repositories.Interfaces;
 using VetClinic.DAL.UnitOfWork.Interfaces;
 
 namespace VetClinic.DAL.UnitOfWork
@@ -12,6 +12,10 @@ namespace VetClinic.DAL.UnitOfWork
         ICustomerRepository _customers;
         IProductRepository _products;
         IOrdersRepository _orders;
+        IPetOwnerRepository _petowners;
+        IPetDetailRepository _petdetails;
+        IVetRepository _vets;
+        IVisitRepository _visits;
 
 
 
@@ -59,8 +63,49 @@ namespace VetClinic.DAL.UnitOfWork
             }
         }
 
+        public IPetOwnerRepository PetOwners
+        {
+            get
+            {
+                if (_petowners == null)
+                    _petowners = new PetOwnerRepository(_context);
 
+                return _petowners;
+            }
+        }
 
+        public IPetDetailRepository PetDetails
+        {
+            get
+            {
+                if (_petdetails == null)
+                    _petdetails = new PetDetailRepository(_context);
+
+                return _petdetails;
+            }
+        }
+
+        public IVetRepository Vets
+        {
+            get
+            {
+                if (_vets == null)
+                    _vets = new VetRepository(_context);
+
+                return _vets;
+            }
+        }
+
+        public IVisitRepository Visits
+        {
+            get
+            {
+                if (_visits == null)
+                    _visits = new VisitRepository(_context);
+
+                return _visits;
+            }
+        }
 
         public int SaveChanges()
         {

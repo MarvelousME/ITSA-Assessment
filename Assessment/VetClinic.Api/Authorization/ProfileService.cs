@@ -3,8 +3,8 @@ using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using VetClinic.DAl.Core;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Constants;
+using VetClinic.DAL.Models;
 
 namespace VetClinic.Api.Authorization
 {

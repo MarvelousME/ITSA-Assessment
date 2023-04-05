@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using VetClinic.DAl.Models;
+using VetClinic.DAL.Models;
 using VetClinic.DAL.Models.Interfaces;
 
 namespace VetClinic.DAL.DbContexts
@@ -17,6 +17,11 @@ namespace VetClinic.DAL.DbContexts
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<PetOwner> PetOwners { get; set; }
+        public DbSet<PetDetail> PetDetails { get; set; }
+        public DbSet<Breed> Breeds { get; set; }
+        public DbSet<AnimalType> AnimalTypes { get; set; }
+
 
 
 
@@ -62,6 +67,10 @@ namespace VetClinic.DAL.DbContexts
             builder.Entity<OrderDetail>().ToTable($"App{nameof(OrderDetails)}");
             builder.Entity<OrderDetail>().Property(p => p.UnitPrice).HasColumnType(priceDecimalType);
             builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
+
+            //One to many relationship
+            builder.Entity<PetOwner>().HasMany(r => r.PetDetails).WithOne().HasForeignKey(r => r.PetOwnerId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+
         }
 
 

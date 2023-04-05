@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using VetClinic.DAl.Core.Interfaces;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Constants;
+using VetClinic.Core.Permissions;
 using VetClinic.DAL.DbContexts;
+using VetClinic.DAL.Interfaces;
+using VetClinic.DAL.Models;
 
-namespace VetClinic.DAl.Core
+namespace VetClinic.DAl.Managers
 {
     public class AccountManager : IAccountManager
     {

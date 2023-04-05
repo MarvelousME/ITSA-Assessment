@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using VetClinic.DAl.Core;
+using VetClinic.Core.Constants;
 using VetClinic.DAL.DbContexts;
 
 namespace VetClinic.DAL.UnitOfWork

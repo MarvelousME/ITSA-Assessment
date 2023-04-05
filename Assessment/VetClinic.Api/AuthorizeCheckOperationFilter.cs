@@ -15,7 +15,7 @@ namespace VetClinic.Api
                 .OfType<AuthorizeAttribute>()
                 .Any();
 
-            if (hasAuthorize.HasValue && (bool) hasAuthorize == true)
+            if (hasAuthorize.HasValue && (bool)hasAuthorize == true)
             {
                 operation.Responses.Add("401", new OpenApiResponse { Description = "Unauthorized" });
 

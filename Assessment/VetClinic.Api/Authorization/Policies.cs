@@ -2,6 +2,8 @@
 {
     public class Policies
     {
+        public const string ViewAllPetOwnersPolicy = "View All Pet Owners";
+
         ///<summary>Policy to allow viewing all user records.</summary>
         public const string ViewAllUsersPolicy = "View All Users";
 

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using VetClinic.DAl.Models;
+using VetClinic.DAL.Models;
 
-namespace VetClinic.DAl.Core.Interfaces
+namespace VetClinic.DAL.Interfaces
 {
     public interface IAccountManager
     {

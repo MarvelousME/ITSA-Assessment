@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using VetClinic.DAl.Models;
-using VetClinic.DAL.Repositories.Interfaces;
+using VetClinic.DAL.Models;
 
-namespace VetClinic.DAl.Repositories.Interfaces
+namespace VetClinic.DAL.Repositories.Interfaces
 {
     public interface ICustomerRepository : IRepository<Customer>
     {

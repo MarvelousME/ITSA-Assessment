@@ -1,4 +1,4 @@
-﻿using VetClinic.DAl.Core;
+﻿using VetClinic.Core.Permissions;
 
 namespace VetClinic.Api.ViewModels
 {

@@ -17,8 +17,6 @@ namespace VetClinic.Api.ViewModels
     }
 
 
-
-
     public class CustomerViewModelValidator : AbstractValidator<CustomerViewModel>
     {
         public CustomerViewModelValidator()

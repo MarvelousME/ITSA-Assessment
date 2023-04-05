@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using VetClinic.DAl.Core;
+using VetClinic.Core.Constants;
+using VetClinic.Core.Permissions;
 
 namespace VetClinic.Api.Authorization
 {
     public class ViewRoleAuthorizationRequirement : IAuthorizationRequirement
     {
-
     }
-
-
 
     public class ViewRoleAuthorizationHandler : AuthorizationHandler<ViewRoleAuthorizationRequirement, string>
     {

@@ -1,7 +1,7 @@
 ﻿using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
-using VetClinic.DAl.Core;
+using VetClinic.Core.Constants;
 
 namespace VetClinic.Api
 {

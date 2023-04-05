@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using VetClinic.DAL.Models.Interfaces;
 
-namespace VetClinic.DAl.Models
+namespace VetClinic.DAL.Models
 {
     public class AuditableEntity : IAuditableEntity
     {

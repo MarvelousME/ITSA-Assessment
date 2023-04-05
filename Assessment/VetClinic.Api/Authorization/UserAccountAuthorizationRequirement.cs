@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using VetClinic.Api.Helpers;
-using VetClinic.DAl.Core;
+using VetClinic.Core.Constants;
+using VetClinic.Core.Permissions;
 
 namespace VetClinic.Api.Authorization
 {

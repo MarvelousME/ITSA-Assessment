@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VetClinic.DAl.Models
+namespace VetClinic.DAL.Models
 {
     public class ProductCategory : AuditableEntity
     {

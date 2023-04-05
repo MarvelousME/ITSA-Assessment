@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using VetClinic.DAL.Models.Interfaces;
 
 namespace VetClinic.DAL.Models
@@ -17,7 +17,7 @@ namespace VetClinic.DAL.Models
         public string Surname { get; set; }
 
         [Required]
-        [Display(Name="Phone Number")]
+        [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
@@ -36,5 +36,8 @@ namespace VetClinic.DAL.Models
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+
+        //Associated Pet to Pet Owner
+        public ICollection<PetDetail> PetDetails { get; set; }
     }
 }

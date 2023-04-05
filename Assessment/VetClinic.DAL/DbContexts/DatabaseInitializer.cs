@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using VetClinic.DAl.Core;
-using VetClinic.DAl.Core.Interfaces;
-using VetClinic.DAl.Models;
+using VetClinic.Core.Enums;
+using VetClinic.Core.Permissions;
+using VetClinic.DAL.Interfaces;
+using VetClinic.DAL.Models;
 
 namespace VetClinic.DAL.DbContexts
 {
@@ -34,7 +35,7 @@ namespace VetClinic.DAL.DbContexts
         {
             await _context.Database.MigrateAsync().ConfigureAwait(false);
             await SeedDefaultUsersAsync();
-            await SeedDemoDataAsync();
+            await SeedDataAsync();
         }
 
         private async Task SeedDefaultUsersAsync()
@@ -49,8 +50,8 @@ namespace VetClinic.DAL.DbContexts
                 await EnsureRoleAsync(adminRoleName, "administrator", ApplicationPermissions.GetAllPermissionValues());
                 await EnsureRoleAsync(userRoleName, "user", new string[] { });
 
-                await CreateUserAsync("admin", "tempP@ss123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
-                await CreateUserAsync("user", "tempP@ss123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
+                await CreateUserAsync("admin", "admin123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
+                await CreateUserAsync("user", "user123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
 
                 _logger.LogInformation("Default account generation completed");
             }
@@ -93,7 +94,11 @@ namespace VetClinic.DAL.DbContexts
             return applicationUser;
         }
 
-        private async Task SeedDemoDataAsync()
+        /// <summary>
+        /// TODO: Seed Breed, AnimalType, PetOwner, PetDetail, Vet, Visit
+        /// </summary>
+        /// <returns></returns>
+        private async Task SeedDataAsync()
         {
             if (!await _context.Customers.AnyAsync() && !await _context.ProductCategories.AnyAsync())
             {

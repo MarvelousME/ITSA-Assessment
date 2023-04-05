@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 
-namespace VetClinic.DAl.Core
+namespace VetClinic.Core.Permissions
 {
     public static class ApplicationPermissions
     {
         public static ReadOnlyCollection<ApplicationPermission> AllPermissions;
 
+        public const string PetOwnerPermissionGroupName = "Pet Owner Permissions";
+        public static ApplicationPermission ViewPetOwners = new ApplicationPermission("View PetOwners", "petowners.view", PetOwnerPermissionGroupName, "Permission to view other Pet Owner details");
+        public static ApplicationPermission ManagePetOwners = new ApplicationPermission("Manage PetOwners", "petowners.manage", PetOwnerPermissionGroupName, "Permission to create, delete and modify other pet owner details");
+
+        public const string VetPermissionGroupName = "Vet Permissions";
+        public static ApplicationPermission ViewVets = new ApplicationPermission("View Vets", "vets.view", VetPermissionGroupName, "Permission to view other Vet details");
+        public static ApplicationPermission ManageVets = new ApplicationPermission("Manage Vets", "vets.manage", VetPermissionGroupName, "Permission to create, delete and modify other Vet details");
 
         public const string UsersPermissionGroupName = "User Permissions";
         public static ApplicationPermission ViewUsers = new ApplicationPermission("View Users", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
@@ -25,6 +30,12 @@ namespace VetClinic.DAl.Core
             {
                 ViewUsers,
                 ManageUsers,
+
+                ViewPetOwners,
+                ManagePetOwners,
+
+                ViewVets,
+                ManageVets,
 
                 ViewRoles,
                 ManageRoles,
@@ -51,42 +62,7 @@ namespace VetClinic.DAl.Core
 
         public static string[] GetAdministrativePermissionValues()
         {
-            return new string[] { ManageUsers, ManageRoles, AssignRoles };
-        }
-    }
-
-
-
-    public class ApplicationPermission
-    {
-        public ApplicationPermission()
-        { }
-
-        public ApplicationPermission(string name, string value, string groupName, string description = null)
-        {
-            Name = name;
-            Value = value;
-            GroupName = groupName;
-            Description = description;
-        }
-
-
-
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public string GroupName { get; set; }
-        public string Description { get; set; }
-
-
-        public override string ToString()
-        {
-            return Value;
-        }
-
-
-        public static implicit operator string(ApplicationPermission permission)
-        {
-            return permission.Value;
+            return new string[] { ManageUsers, ManageRoles, AssignRoles, ManagePetOwners, ManageVets };
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace VetClinic.DAl.Models
+﻿namespace VetClinic.DAL.Models
 {
     public class OrderDetail : AuditableEntity
     {
