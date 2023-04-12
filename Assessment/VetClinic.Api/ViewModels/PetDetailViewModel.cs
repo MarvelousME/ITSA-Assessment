@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using VetClinic.Core.Enums;
+using VetClinic.DAL.Models;
 
 namespace VetClinic.Api.ViewModels
 {
@@ -7,15 +8,15 @@ namespace VetClinic.Api.ViewModels
     {
         public int Id { get; set; }
 
-        //[Required]
+        [Required]
         public string Name { get; set; } = String.Empty;
 
-        //[Required]
+        [Required]
         [Display(Name = "Animal Type")]
-        public AnimalType AnimalType { get; set; } = AnimalType.Unknown;
+        public AnimalType AnimalType { get; set; }
 
-        //[Required]
-        public Breed Breed { get; set; } = Breed.Unknown;
+        [Required]
+        public Breed Breed { get; set; }
 
     }
 }

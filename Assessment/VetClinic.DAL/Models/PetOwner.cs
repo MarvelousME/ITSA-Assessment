@@ -39,6 +39,6 @@ namespace VetClinic.DAL.Models
         public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
 
         //Associated Pet to Pet Owner
-        public ICollection<PetDetail> PetDetails { get; set; }
+        public ICollection<PetDetail>? PetDetails { get; set; }
     }
 }

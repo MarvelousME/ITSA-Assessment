@@ -51,8 +51,8 @@ namespace VetClinic.DAL.DbContexts
                 await EnsureRoleAsync(adminRoleName, "administrator", ApplicationPermissions.GetAllPermissionValues());
                 await EnsureRoleAsync(userRoleName, "user", new string[] { });
 
-                await CreateUserAsync("admin", "admin123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
-                await CreateUserAsync("user", "user123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
+                await CreateUserAsync("admin", "Admin@123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
+                await CreateUserAsync("staff", "User@123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
 
                 _logger.LogInformation("Account generation completed");
             }

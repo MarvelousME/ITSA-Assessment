@@ -1,56 +1,31 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace VetClinic.Api.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Intial_Commit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppCustomers",
+                name: "AnimalTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppCustomers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppProductCategories",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppProductCategories", x => x.Id);
+                    table.PrimaryKey("PK_AnimalTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,43 +81,66 @@ namespace VetClinic.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppProducts",
+                name: "Breeds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Icon = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true),
-                    BuyingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SellingPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UnitsInStock = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDiscontinued = table.Column<bool>(type: "bit", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: true),
-                    ProductCategoryId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppProducts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AppProducts_AppProductCategories_ProductCategoryId",
-                        column: x => x.ProductCategoryId,
-                        principalTable: "AppProductCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppProducts_AppProducts_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "AppProducts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_Breeds", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PetOwners",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PetOwners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MedicalLicense = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vets", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,39 +162,6 @@ namespace VetClinic.Api.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AppOrders",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Comments = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateModified = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CashierId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AppOrders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AppOrders_AppCustomers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AppCustomers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppOrders_AspNetUsers_CashierId",
-                        column: x => x.CashierId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -285,77 +250,75 @@ namespace VetClinic.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AppOrderDetails",
+                name: "PetDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Discount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnimalTypeId = table.Column<int>(type: "int", nullable: false),
+                    BreedId = table.Column<int>(type: "int", nullable: false),
+                    Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    PetOwnerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppOrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_PetDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AppOrderDetails_AppOrders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "AppOrders",
+                        name: "FK_PetDetails_AnimalTypes_AnimalTypeId",
+                        column: x => x.AnimalTypeId,
+                        principalTable: "AnimalTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppOrderDetails_AppProducts_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "AppProducts",
+                        name: "FK_PetDetails_Breeds_BreedId",
+                        column: x => x.BreedId,
+                        principalTable: "Breeds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PetDetails_PetOwners_PetOwnerId",
+                        column: x => x.PetOwnerId,
+                        principalTable: "PetOwners",
+                        principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AppCustomers_Name",
-                table: "AppCustomers",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppOrderDetails_OrderId",
-                table: "AppOrderDetails",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppOrderDetails_ProductId",
-                table: "AppOrderDetails",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppOrders_CashierId",
-                table: "AppOrders",
-                column: "CashierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppOrders_CustomerId",
-                table: "AppOrders",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppProducts_Name",
-                table: "AppProducts",
-                column: "Name");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppProducts_ParentId",
-                table: "AppProducts",
-                column: "ParentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppProducts_ProductCategoryId",
-                table: "AppProducts",
-                column: "ProductCategoryId");
+            migrationBuilder.CreateTable(
+                name: "Visits",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PetDetailId = table.Column<int>(type: "int", nullable: true),
+                    VetId = table.Column<int>(type: "int", nullable: true),
+                    VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Visits_PetDetails_PetDetailId",
+                        column: x => x.PetDetailId,
+                        principalTable: "PetDetails",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Visits_Vets_VetId",
+                        column: x => x.VetId,
+                        principalTable: "Vets",
+                        principalColumn: "Id");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -395,13 +358,35 @@ namespace VetClinic.Api.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetDetails_AnimalTypeId",
+                table: "PetDetails",
+                column: "AnimalTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetDetails_BreedId",
+                table: "PetDetails",
+                column: "BreedId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PetDetails_PetOwnerId",
+                table: "PetDetails",
+                column: "PetOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_PetDetailId",
+                table: "Visits",
+                column: "PetDetailId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Visits_VetId",
+                table: "Visits",
+                column: "VetId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AppOrderDetails");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -418,22 +403,28 @@ namespace VetClinic.Api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AppOrders");
-
-            migrationBuilder.DropTable(
-                name: "AppProducts");
+                name: "Visits");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AppCustomers");
-
-            migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AppProductCategories");
+                name: "PetDetails");
+
+            migrationBuilder.DropTable(
+                name: "Vets");
+
+            migrationBuilder.DropTable(
+                name: "AnimalTypes");
+
+            migrationBuilder.DropTable(
+                name: "Breeds");
+
+            migrationBuilder.DropTable(
+                name: "PetOwners");
         }
     }
 }

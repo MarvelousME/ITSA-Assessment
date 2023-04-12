@@ -13,13 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20220712064921_Initial.cs" />
-    <Compile Remove="Migrations\20220712064921_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20230321182101_SeedDb.cs" />
-    <Compile Remove="Migrations\20230321182101_SeedDb.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Helpers\Templates\PlainTextTestEmail.template" />
     <None Remove="Helpers\Templates\TestEmail.template" />
   </ItemGroup>

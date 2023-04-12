@@ -30,7 +30,6 @@ namespace VetClinic.DAL.SeedData
 
             PetOwner petOwner = new PetOwner()
             {
-                Id = 1,
                 Name = "Marvin",
                 Surname = "Saunders",
                 Email = "marvin.saunders@gmail.com",
@@ -47,7 +46,6 @@ namespace VetClinic.DAL.SeedData
 
              petOwner = new PetOwner()
             {
-                Id = 1,
                 Name = "Niquole",
                 Surname = "Pieters",
                 Email = "niquole.pieters@gmail.com",
@@ -64,7 +62,6 @@ namespace VetClinic.DAL.SeedData
 
              petOwner = new PetOwner()
             {
-                Id = 3,
                 Name = "Bradley",
                 Surname = "Wade",
                 Email = "bradley.wade@gmail.com",

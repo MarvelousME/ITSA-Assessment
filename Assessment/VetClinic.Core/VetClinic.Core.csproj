@@ -10,4 +10,9 @@
     <Company>ITSA Assessment</Company>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Enums\AnimalType.cs" />
+    <Compile Remove="Enums\Breed.cs" />
+  </ItemGroup>
+
 </Project>

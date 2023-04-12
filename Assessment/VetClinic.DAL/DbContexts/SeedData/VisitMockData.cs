@@ -15,7 +15,6 @@ namespace VetClinic.DAL.SeedData
 
             Visit visit = new Visit()
             {
-                Id = 1,
                 PetDetail= new PetDetail() { Id = 2 },
                 Vet = new Vet() { Id = 2},
                 IsActive = true,
@@ -29,7 +28,6 @@ namespace VetClinic.DAL.SeedData
 
             visit = new Visit()
             {
-                Id = 1,
                 PetDetail = new PetDetail() { Id = 3 },
                 Vet = new Vet() { Id = 3 },
                 IsActive = true,

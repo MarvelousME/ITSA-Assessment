@@ -15,7 +15,6 @@ namespace VetClinic.DAL.SeedData
 
             Vet vet = new Vet()
             {
-                Id = 1,
                 Name = "Marvin",
                 Surname = "Saunders",
                 MedicalLicense = "ML00001",
@@ -30,7 +29,6 @@ namespace VetClinic.DAL.SeedData
 
             vet = new Vet()
             {
-                Id = 2,
                 Name = "Niquole",
                 Surname = "Pieters",
                 MedicalLicense = "ML00002",
@@ -45,7 +43,6 @@ namespace VetClinic.DAL.SeedData
 
             vet = new Vet()
             {
-                Id = 3,
                 Name = "Bradley",
                 Surname = "Wade",
                 MedicalLicense = "ML00003",
