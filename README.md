@@ -16,3 +16,11 @@
    Password: Admin@123<br/>
    
 *TODO: UI and Tests
+
+Database Design
+
+![image](https://user-images.githubusercontent.com/5907341/231494776-88a86f6b-43fd-43d3-a13e-85107a14fd52.png)
+
+I used IdentityServer with Identity for the User Management and storing of JWT Tokens
+
+![image](https://user-images.githubusercontent.com/5907341/231496330-91a5fb90-c6f0-4b2d-84c5-3ebd1db060eb.png)
