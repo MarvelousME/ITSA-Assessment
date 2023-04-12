@@ -175,6 +175,7 @@ namespace VetClinic.Api.Helpers
             builder.Services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             builder.Services.AddScoped<IAccountManager, AccountManager>();
             builder.Services.AddScoped<IPetOwnerManager, PetOwnerManager>();
+            builder.Services.AddScoped<IPetDetailManager, PetDetailManager>();
             builder.Services.AddScoped<IVetManager, VetManager>();
             builder.Services.AddScoped<IVisitManager, VisitManager>();
 

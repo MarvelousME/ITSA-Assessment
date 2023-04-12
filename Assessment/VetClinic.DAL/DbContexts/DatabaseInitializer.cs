@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using VetClinic.Core.Enums;
 using VetClinic.Core.Permissions;
+using VetClinic.DAL.DbContexts.SeedData;
 using VetClinic.DAL.Interfaces;
 using VetClinic.DAL.Models;
 using VetClinic.DAL.SeedData;
@@ -96,7 +97,7 @@ namespace VetClinic.DAL.DbContexts
         }
 
         /// <summary>
-        /// Seed Breed, AnimalType, PetOwner, PetDetail, Vet, Visit
+        /// Seed Breed, AnimalType, PetOwner, PetDetail, Vet tables with dummy data
         /// </summary>
         /// <returns></returns>
         private async Task SeedDataAsync()
@@ -125,12 +126,22 @@ namespace VetClinic.DAL.DbContexts
                 }
                 #endregion
 
-                #region Visit Seed Data
-                var Visits = VisitMockData.GetSampleVisitList();
+                #region AnimalType Seed Data
+                var animalTypes = AnimalTypeMockData.GetAnimalTypeList();
 
-                foreach (Visit record in Visits)
+                foreach (AnimalType record in animalTypes)
                 {
-                    await _context.Visits.AddAsync(record);
+                    await _context.AnimalTypes.AddAsync(record);
+                    await _context.SaveChangesAsync();
+                }
+                #endregion
+
+                #region Breed Seed Data
+                var breeds = BreedMockData.GetBreedList();
+
+                foreach (Breed record in breeds)
+                {
+                    await _context.Breeds.AddAsync(record);
                     await _context.SaveChangesAsync();
                 }
                 #endregion

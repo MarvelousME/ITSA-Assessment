@@ -31,6 +31,9 @@ namespace VetClinic.DAL.Models
         [MaxLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [Display(Name = "ID Number")]
         public string IDNumber { get; set; }
+
+        [Display(Name = "Account Number")]
+        public string AccountNumber { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }

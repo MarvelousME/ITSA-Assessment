@@ -31,33 +31,33 @@ namespace VisitClinic.Api.Controllers
             _emailSender = emailSender;
         }
 
-        //[HttpGet("visits/{pageNumber:int}/{pageSize:int}")]
-        //[ProducesResponseType(200, Type = typeof(List<VisitViewModel>))]
-        //public async Task<IActionResult> GetVisits(int pageNumber = 1, int pageSize = 10)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = await _visitManager.GetVisitsAsync(pageNumber, pageSize);
+        [HttpGet("visits/{pageNumber:int}/{pageSize:int}")]
+        [ProducesResponseType(200, Type = typeof(List<VisitViewModel>))]
+        public async Task<IActionResult> GetVisits(int pageNumber = 1, int pageSize = 10)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _visitManager.GetVisitsAsync(pageNumber, pageSize);
 
-        //        if (result.Item1 != null)
-        //        {
-        //            List<VisitViewModel> VisitsVM = new List<VisitViewModel>();
+                if (result.Item1 != null)
+                {
+                    List<VisitViewModel> VisitsVM = new List<VisitViewModel>();
 
-        //            foreach (var item in result.Item1)
-        //            {
-        //                var VisitVM = _mapper.Map<VisitViewModel>(item);
+                    foreach (var item in result.Item1)
+                    {
+                        var VisitVM = _mapper.Map<VisitViewModel>(item);
 
-        //                VisitsVM.Add(VisitVM);
-        //            }
+                        VisitsVM.Add(VisitVM);
+                    }
 
-        //            return Ok(VisitsVM);
-        //        }
+                    return Ok(VisitsVM);
+                }
 
-        //        AddError(result.Errors);
-        //    }
+                AddError(result.Errors);
+            }
 
-        //    return BadRequest(ModelState);
-        //}
+            return BadRequest(ModelState);
+        }
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateVisitAsync([FromBody]Visit visit)

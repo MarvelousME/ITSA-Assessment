@@ -15,21 +15,13 @@ namespace VetClinic.Api.ViewModels
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; } = String.Empty;
 
-        //[Required]
-        //[EmailAddress]
-        //[DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
-        public string Email { get; set; } = String.Empty;
+        public string Email { get; set; }
+        public string AccountNumber { get; set; }
 
-        //[Required]
-        //[MinLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
-        //[MaxLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [Display(Name = "ID Number")]
-        public string IDNumber { get; set; } = String.Empty;
-        //public string CreatedBy { get; set; }
-        //public string UpdatedBy { get; set; }
-        //public DateTime CreatedDate { get; set; }
-        //public DateTime UpdatedDate { get; set; }
+        public string IDNumber { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
 
@@ -39,12 +31,17 @@ namespace VetClinic.Api.ViewModels
         public ICollection<PetDetailViewModel> PetDetails { get; set; } = new List<PetDetailViewModel>();
     }
 
+    /// <summary>
+    /// NB: Was trying out Fluent Validation, Data annotations seem better to me
+    /// </summary>
     public class PetOwnerViewModelValidator : AbstractValidator<PetOwnerViewModel>
     {
         public PetOwnerViewModelValidator()
         {
             RuleFor(petowner => petowner.Name).NotEmpty().WithMessage("Name cannot be empty");
             RuleFor(petowner => petowner.Surname).NotEmpty().WithMessage("Surname cannot be empty");
+            RuleFor(petowner => petowner.AccountNumber)
+               .NotEmpty().WithMessage("Account Number cannot be empty");
             RuleFor(petowner => petowner.Phone)
                 .NotEmpty().WithMessage("Phone Number cannot be empty")
                 .Length(10).WithMessage("Phone Number cannot be less or more that 10 digits");

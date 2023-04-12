@@ -8,6 +8,7 @@ namespace VetClinic.Api.ViewModels
         public PetDetail PetDetail { get; set; }
         public Vet Vet { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string SummayOfVisit { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
     }

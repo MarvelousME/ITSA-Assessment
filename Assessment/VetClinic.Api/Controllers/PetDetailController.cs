@@ -29,7 +29,7 @@ namespace VetClinic.Api.Controllers
 
         [HttpGet("petdetails/{pageNumber:int}/{pageSize:int}")]
         [ProducesResponseType(200, Type = typeof(List<PetDetailViewModel>))]
-        public async Task<IActionResult> GetPetDetails(int pageNumber, int pageSize)
+        public async Task<IActionResult> GetPetDetails(int pageNumber = 1, int pageSize = 10)
         {
             var petDetails = await _petDetailManager.GetPetDetailsAsync(pageNumber, pageSize);
 

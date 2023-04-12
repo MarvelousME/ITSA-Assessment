@@ -110,6 +110,7 @@ namespace VetClinic.Api.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IDNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -256,9 +257,10 @@ namespace VetClinic.Api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnimalTypeId = table.Column<int>(type: "int", nullable: false),
-                    BreedId = table.Column<int>(type: "int", nullable: false),
+                    AnimalTypeId = table.Column<int>(type: "int", nullable: true),
+                    BreedId = table.Column<int>(type: "int", nullable: true),
                     Owner = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -274,14 +276,12 @@ namespace VetClinic.Api.Migrations
                         name: "FK_PetDetails_AnimalTypes_AnimalTypeId",
                         column: x => x.AnimalTypeId,
                         principalTable: "AnimalTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PetDetails_Breeds_BreedId",
                         column: x => x.BreedId,
                         principalTable: "Breeds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_PetDetails_PetOwners_PetOwnerId",
                         column: x => x.PetOwnerId,
@@ -298,6 +298,7 @@ namespace VetClinic.Api.Migrations
                     PetDetailId = table.Column<int>(type: "int", nullable: true),
                     VetId = table.Column<int>(type: "int", nullable: true),
                     VisitDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SummayOfVisit = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),

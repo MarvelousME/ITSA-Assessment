@@ -18,5 +18,9 @@ namespace VetClinic.Api.ViewModels
         [Required]
         public Breed Breed { get; set; }
 
+        [Required]
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate { get; set; }
+
     }
 }

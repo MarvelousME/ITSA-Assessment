@@ -12,14 +12,15 @@ namespace VetClinic.DAL.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         [Display(Name = "Animal Type")]
-        public AnimalType AnimalType { get; set; }
+        public AnimalType? AnimalType { get; set; }
 
-        [Required]
-        public Breed Breed { get; set; }
+        public Breed? Breed { get; set; }
 
         public string Owner { get; set; }
+
+        [Display(Name = "Birth Date")]
+        public DateTime? BirthDate { get; set; }
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }

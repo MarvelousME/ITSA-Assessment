@@ -9,38 +9,25 @@ namespace VetClinic.DAL.SeedData
 {
     public class PetOwnerMockData
     {
-        public static List<PetOwner> GetPetOwnerList()
+        public static IEnumerable<PetOwner> GetPetOwnerList()
         {
-            ICollection<PetDetail> petDetails= new List<PetDetail>();
-            petDetails.Add(item: new PetDetail() { Id = 1 });
-            petDetails.Add(item: new PetDetail() { Id = 2 });
-            petDetails.Add(item: new PetDetail() { Id = 3 });
-
-            ICollection<PetDetail> petDetails2 = new List<PetDetail>();
-            petDetails.Add(item: new PetDetail() { Id = 1 });
-            petDetails.Add(item: new PetDetail() { Id = 2 });
-            petDetails.Add(item: new PetDetail() { Id = 3 });
-
-            ICollection<PetDetail> petDetails3 = new List<PetDetail>();
-            petDetails.Add(item: new PetDetail() { Id = 1 });
-            petDetails.Add(item: new PetDetail() { Id = 2 });
-            petDetails.Add(item: new PetDetail() { Id = 3 });
-
-            List<PetOwner> petOwners = new List<PetOwner>();
+            IList<PetOwner> petOwners = new List<PetOwner>();
 
             PetOwner petOwner = new PetOwner()
             {
                 Name = "Marvin",
                 Surname = "Saunders",
+                Phone = "0813340625",
                 Email = "marvin.saunders@gmail.com",
                 IDNumber = "8305045248080",
-                PetDetails = petDetails,
+                AccountNumber = "0123456789",
+                PetDetails = null,
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow,
-                CreatedBy = "Tester",
-                UpdatedBy = "Tester"
+                CreatedBy = "1",
+                UpdatedBy = "1"
             };
             petOwners.Add(petOwner);
 
@@ -48,15 +35,17 @@ namespace VetClinic.DAL.SeedData
             {
                 Name = "Niquole",
                 Surname = "Pieters",
-                Email = "niquole.pieters@gmail.com",
+                 Phone = "0813340625",
+                 Email = "niquole.pieters@gmail.com",
                 IDNumber = "8305045248080",
-                PetDetails = petDetails2,
+                 AccountNumber = "0123456789",
+                 PetDetails = null,
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow,
-                CreatedBy = "Tester",
-                UpdatedBy = "Tester"
+                CreatedBy = "1",
+                UpdatedBy = "1"
             };
             petOwners.Add(petOwner);
 
@@ -64,15 +53,17 @@ namespace VetClinic.DAL.SeedData
             {
                 Name = "Bradley",
                 Surname = "Wade",
+                Phone = "0813340625",
                 Email = "bradley.wade@gmail.com",
-                IDNumber = "8305045248080",
-                PetDetails = petDetails3,
+                 AccountNumber = "0123456789",
+                 IDNumber = "8305045248080",
+                PetDetails = null,
                 IsActive = true,
                 IsDeleted = false,
                 CreatedDate = DateTime.UtcNow,
                 UpdatedDate = DateTime.UtcNow,
-                CreatedBy = "Tester",
-                UpdatedBy = "Tester"
+                CreatedBy = "1",
+                UpdatedBy = "1"
             };
             petOwners.Add(petOwner);
 

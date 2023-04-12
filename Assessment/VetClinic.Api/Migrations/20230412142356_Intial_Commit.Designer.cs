@@ -12,7 +12,7 @@ using VetClinic.DAL.DbContexts;
 namespace VetClinic.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230412121417_Intial_Commit")]
+    [Migration("20230412142356_Intial_Commit")]
     partial class Intial_Commit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -337,10 +337,13 @@ namespace VetClinic.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AnimalTypeId")
+                    b.Property<int?>("AnimalTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BreedId")
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("BreedId")
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
@@ -389,6 +392,9 @@ namespace VetClinic.Api.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -497,6 +503,9 @@ namespace VetClinic.Api.Migrations
                     b.Property<int?>("PetDetailId")
                         .HasColumnType("int");
 
+                    b.Property<string>("SummayOfVisit")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -573,15 +582,11 @@ namespace VetClinic.Api.Migrations
                 {
                     b.HasOne("VetClinic.DAL.Models.AnimalType", "AnimalType")
                         .WithMany()
-                        .HasForeignKey("AnimalTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AnimalTypeId");
 
                     b.HasOne("VetClinic.DAL.Models.Breed", "Breed")
                         .WithMany()
-                        .HasForeignKey("BreedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BreedId");
 
                     b.HasOne("VetClinic.DAL.Models.PetOwner", "PetOwner")
                         .WithMany("PetDetails")
