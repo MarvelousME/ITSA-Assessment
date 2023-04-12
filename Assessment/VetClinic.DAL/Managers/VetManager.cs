@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,13 @@ namespace VetClinic.DAL.Managers
     public class VetManager : IVetManager
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public VetManager(ApplicationDbContext context, IHttpContextAccessor httpAccessor)
+        public VetManager(ApplicationDbContext context, IHttpContextAccessor httpAccessor, ILogger<VetManager> logger)
         {
             _context = context;
             _context.CurrentUserId = httpAccessor.HttpContext?.User.FindFirst(ClaimConstants.Subject)?.Value?.Trim();
+            _logger = logger;
         }
 
         /// <summary>
@@ -29,40 +32,54 @@ namespace VetClinic.DAL.Managers
         /// <param name="page">page number</param>
         /// <param name="pageSize">size of records to show</param>
         /// <returns>List of Records</returns>
-        public async Task<List<Vet>> GetVetsAsync(int page, int pageSize)
+        public async Task<(List<Vet>, string[] Errors)> GetVetsAsync(int page, int pageSize)
         {
-            IQueryable<Vet> vetsQuery = _context.Vets
-                .OrderBy(u => u.Name);
+            IQueryable<Vet> vetsQuery;
+            try
+            {
+                 vetsQuery = _context.Vets
+                    .OrderBy(u => u.Name);
 
 
-            if (page != -1)
-                vetsQuery = vetsQuery.Skip((page - 1) * pageSize);
+                if (page != -1)
+                    vetsQuery = vetsQuery.Skip((page - 1) * pageSize);
 
-            if (pageSize != -1)
-                vetsQuery = vetsQuery.Take(pageSize);
+                if (pageSize != -1)
+                    vetsQuery = vetsQuery.Take(pageSize);
 
+                return  (await vetsQuery.ToListAsync(), new string[] { "Vet Added" });
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex.Message, ex);
 
-            return  await vetsQuery
-                    .ToListAsync();
+                return (null, new string[] { "Error retrieving list" });
+            }
         }
 
-        public async Task<(bool Succeeded, string[] Errors)> CreateVetAsync(Vet vet)
+        /// <summary>
+        /// Create a Vet
+        /// </summary>
+        /// <param name="vet"></param>
+        /// <returns></returns>
+        public async Task<(Vet vet, string[] Errors)> CreateVetAsync(Vet vet)
         {
             try
             {
                 if (_context.Vets.Any(v => v.MedicalLicense == vet.MedicalLicense))
-                    return (false, new string[] { "Vet already exists!" });
+                    return (null, new string[] { "Vet already exists!" });
 
-                var result = await _context.Vets.AddAsync(vet);
+                var record = await _context.Vets.AddAsync(vet).ConfigureAwait(false);
 
                 await _context.SaveChangesAsync();
 
-
-                return (true, new string[] { "Vet Added" });
+                return (vet, new string[] { "Vet Added" });
             }
             catch(Exception ex)
             {
-                return (false, new string[] { ex.ToString() });
+                _logger.LogError(ex.Message, ex);
+
+                return (null, new string[] { ex.ToString() });
             }
         }
 
@@ -73,7 +90,7 @@ namespace VetClinic.DAL.Managers
         /// <returns></returns>
         public async Task<bool> CheckIfRecordExists(int Id)
         {
-            return (await _context.Vets.FindAsync(Id)) != null;
+            return (await _context.Vets.FindAsync(Id).ConfigureAwait(false)) != null;
         }
 
         /// <summary>
@@ -81,9 +98,26 @@ namespace VetClinic.DAL.Managers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<Vet> ReadVetsAsync(int Id)
+        public async Task<(Vet vet, string[] Errors)> ReadVetAsync(int Id)
         {
-            return (Vet) (await _context.Vets.FindAsync(Id).ConfigureAwait(false));
+            try
+            {
+                var result = await _context.Vets.FindAsync(Id).ConfigureAwait(false);
+                if (result != null)
+                {
+                    return (result, new string[] { "Retrieved Vet!" });
+                }
+                else
+                {
+                    return (result, new string[] { "Error retrieving Vet!" });
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                return (null, new string[] { "Cannot find entity" });
+            }
         }
 
         /// <summary>
@@ -107,6 +141,68 @@ namespace VetClinic.DAL.Managers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
+
+                return (false, new string[] { ex.ToString() });
+            }
+        }
+
+        /// <summary>
+        /// Check if the Medical License for a Vet exists
+        /// </summary>
+        /// <param name="medicalLicense">Medical License Number</param>
+        /// <returns></returns>
+        public async Task<bool> CheckIfMedicalLicenseExists(string medicalLicense)
+        {
+            try
+            {
+                var result = await _context.Vets.AnyAsync(m => m.MedicalLicense == medicalLicense);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Perform soft delete
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<(bool Succeeded, string[] Errors)> DeleteVetAsync(int Id,bool delete)
+        {
+            try
+            {
+                if (await CheckIfRecordExists(Id) == false)
+                    return (false, new string[] { "Vet does not exist!" });
+
+                var record = await ReadVetAsync(Id);
+
+                if (record.vet != null)
+                {
+                    record.vet.IsDeleted = delete;
+
+                    var result = _context.Vets.Update(record.vet);
+
+                    var updated = await _context.SaveChangesAsync().ConfigureAwait(false);
+
+                    var msg = delete == true ? "Deleted" : "Un-Deleted";
+
+                    return (true, new string[] { $"Vet {msg}!" });
+                }
+                else
+                {
+                    return (false, new string[] { "Error deleting Vet!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
                 return (false, new string[] { ex.ToString() });
             }
         }
@@ -116,24 +212,37 @@ namespace VetClinic.DAL.Managers
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<(bool Succeeded, string[] Errors)> DeleteVetAsync(int Id)
+        public async Task<(bool Succeeded, string[] Errors)> IsActiveVetAsync(int Id, bool active)
         {
             try
             {
                 if (await CheckIfRecordExists(Id) == false)
                     return (false, new string[] { "Vet does not exist!" });
 
-                var vet = ReadVetsAsync(Id).Result;
+                var record = ReadVetAsync(Id).Result;
 
-                var result = _context.Vets.Update(vet);
+                if (record.vet != null)
+                {
+                    record.vet.IsActive = active;
 
-                await _context.SaveChangesAsync();
+                    var result = _context.Vets.Update(record.vet);
 
+                    var updated = await _context.SaveChangesAsync();
 
-                return (true, new string[] { "Vet Deleted!" });
+                    var msg = active == true ? "Active" : "De-Activated";
+
+                    return (true, new string[] { $"Vet {msg}!" });
+
+                }
+                else
+                {
+                    return (false, new string[] { "Error activating/de-activating Vet!" });
+                }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex);
+
                 return (false, new string[] { ex.ToString() });
             }
         }

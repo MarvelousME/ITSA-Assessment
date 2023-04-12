@@ -6,6 +6,7 @@ namespace VetClinic.Api
 {
     public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
+        private ILogger<ApplicationDbContext> _logger;
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -20,7 +21,8 @@ namespace VetClinic.Api
 
             builder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("VetClinic.Api"));
 
-            return new ApplicationDbContext(builder.Options);
+
+            return new ApplicationDbContext(builder.Options, _logger);
         }
     }
 }

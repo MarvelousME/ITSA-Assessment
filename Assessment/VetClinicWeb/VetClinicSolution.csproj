@@ -26,6 +26,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
@@ -34,6 +38,7 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Authorization\**" />
+    <Content Remove="ClientApp\src\app\components\vets\**" />
     <Content Remove="Controllers\**" />
     <Content Remove="Helpers\**" />
     <Content Remove="Migrations\**" />
@@ -41,11 +46,13 @@
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <Compile Remove="Authorization\**" />
+    <Compile Remove="ClientApp\src\app\components\vets\**" />
     <Compile Remove="Controllers\**" />
     <Compile Remove="Helpers\**" />
     <Compile Remove="Migrations\**" />
     <Compile Remove="ViewModels\**" />
     <EmbeddedResource Remove="Authorization\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\components\vets\**" />
     <EmbeddedResource Remove="Controllers\**" />
     <EmbeddedResource Remove="Helpers\**" />
     <EmbeddedResource Remove="Migrations\**" />
@@ -53,11 +60,13 @@
     <None Remove="$(SpaRoot)dist\**" />
     <None Remove="$(SpaRoot).angular\**" />
     <None Remove="Authorization\**" />
+    <None Remove="ClientApp\src\app\components\vets\**" />
     <None Remove="Controllers\**" />
     <None Remove="Helpers\**" />
     <None Remove="Logs\**" />
     <None Remove="Migrations\**" />
     <None Remove="ViewModels\**" />
+    <TypeScriptCompile Remove="ClientApp\src\app\components\vets\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +77,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\vet-edit.model.ts" />
+    <None Remove="ClientApp\src\app\models\vet.model.ts" />
+    <None Remove="ClientApp\src\app\services\vets-endpoint.service.ts" />
+    <None Remove="ClientApp\src\app\services\vets.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\models\vet-edit.model.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\models\vet.model.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\services\vets-endpoint.service.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\services\vets.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

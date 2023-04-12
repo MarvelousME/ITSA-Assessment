@@ -4,9 +4,6 @@ namespace VetClinic.DAL.UnitOfWork.Interfaces
 {
     public interface IUnitOfWork
     {
-        ICustomerRepository Customers { get; }
-        IProductRepository Products { get; }
-        IOrdersRepository Orders { get; }
         IPetOwnerRepository PetOwners { get; }
         IPetDetailRepository PetDetails { get; }
         IVetRepository Vets { get; }

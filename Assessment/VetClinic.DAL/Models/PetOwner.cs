@@ -8,7 +8,7 @@ namespace VetClinic.DAL.Models
     public class PetOwner : IAuditableEntity
     {
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -28,7 +28,6 @@ namespace VetClinic.DAL.Models
         public string Email { get; set; }
 
         [Required]
-        [MinLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [MaxLength(13, ErrorMessage = "ID Number must be 13 characters in length")]
         [Display(Name = "ID Number")]
         public string IDNumber { get; set; }
@@ -37,7 +36,7 @@ namespace VetClinic.DAL.Models
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
 
         //Associated Pet to Pet Owner
         public ICollection<PetDetail> PetDetails { get; set; }

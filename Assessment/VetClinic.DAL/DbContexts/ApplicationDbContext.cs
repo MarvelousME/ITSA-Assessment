@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading;
@@ -12,11 +13,6 @@ namespace VetClinic.DAL.DbContexts
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public string CurrentUserId { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<ProductCategory> ProductCategories { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<PetOwner> PetOwners { get; set; }
         public DbSet<PetDetail> PetDetails { get; set; }
         public DbSet<Breed> Breeds { get; set; }
@@ -24,9 +20,12 @@ namespace VetClinic.DAL.DbContexts
         public DbSet<Visit> Visits { get; set; }
         public DbSet<Vet> Vets { get; set; }
 
+        private readonly ILogger<ApplicationDbContext> _logger;
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
-        { }
+        public ApplicationDbContext(DbContextOptions options, ILogger<ApplicationDbContext> logger) : base(options)
+        { 
+            this._logger = logger;
+        }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,37 +38,6 @@ namespace VetClinic.DAL.DbContexts
 
             builder.Entity<ApplicationRole>().HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Customer>().Property(c => c.Name).IsRequired().HasMaxLength(100);
-            builder.Entity<Customer>().HasIndex(c => c.Name);
-            builder.Entity<Customer>().Property(c => c.Email).HasMaxLength(100);
-            builder.Entity<Customer>().Property(c => c.PhoneNumber).IsUnicode(false).HasMaxLength(30);
-            builder.Entity<Customer>().Property(c => c.City).HasMaxLength(50);
-            builder.Entity<Customer>().ToTable($"App{nameof(Customers)}");
-
-            builder.Entity<ProductCategory>().Property(p => p.Name).IsRequired().HasMaxLength(100);
-            builder.Entity<ProductCategory>().Property(p => p.Description).HasMaxLength(500);
-            builder.Entity<ProductCategory>().ToTable($"App{nameof(ProductCategories)}");
-
-            builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(100);
-            builder.Entity<Product>().HasIndex(p => p.Name);
-            builder.Entity<Product>().Property(p => p.Description).HasMaxLength(500);
-            builder.Entity<Product>().Property(p => p.Icon).IsUnicode(false).HasMaxLength(256);
-            builder.Entity<Product>().HasOne(p => p.Parent).WithMany(p => p.Children).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Product>().ToTable($"App{nameof(Products)}");
-            builder.Entity<Product>().Property(p => p.BuyingPrice).HasColumnType(priceDecimalType);
-            builder.Entity<Product>().Property(p => p.SellingPrice).HasColumnType(priceDecimalType);
-
-            builder.Entity<Order>().Property(o => o.Comments).HasMaxLength(500);
-            builder.Entity<Order>().ToTable($"App{nameof(Orders)}");
-            builder.Entity<Order>().Property(p => p.Discount).HasColumnType(priceDecimalType);
-
-            builder.Entity<OrderDetail>().ToTable($"App{nameof(OrderDetails)}");
-            builder.Entity<OrderDetail>().Property(p => p.UnitPrice).HasColumnType(priceDecimalType);
-            builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
-
-            //One to many relationship
-            //builder.Entity<PetOwner>().HasMany(r => r.PetDetails).WithOne().HasForeignKey(r => r.PetOwnerId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         }
 
@@ -106,6 +74,8 @@ namespace VetClinic.DAL.DbContexts
 
         private void UpdateAuditEntities()
         {
+            string msg = "";
+
             var modifiedEntries = ChangeTracker.Entries()
                 .Where(x => x.Entity is IAuditableEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
@@ -113,12 +83,16 @@ namespace VetClinic.DAL.DbContexts
             foreach (var entry in modifiedEntries)
             {
                 var entity = (IAuditableEntity)entry.Entity;
+                msg = "";
+                msg = $"Entity {entity} was ";
+
                 DateTime now = DateTime.UtcNow;
 
                 if (entry.State == EntityState.Added)
                 {
                     entity.CreatedDate = now;
                     entity.CreatedBy = CurrentUserId;
+                    msg += $"added by user with Id: {CurrentUserId}";
                 }
                 else
                 {
@@ -126,8 +100,11 @@ namespace VetClinic.DAL.DbContexts
                     base.Entry(entity).Property(x => x.CreatedDate).IsModified = false;
                 }
 
+                
                 entity.UpdatedDate = now;
                 entity.UpdatedBy = CurrentUserId;
+
+                msg += $"updated by user with Id: {CurrentUserId}";
             }
         }
     }

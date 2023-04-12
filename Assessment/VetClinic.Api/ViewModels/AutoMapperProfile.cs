@@ -45,7 +45,6 @@ namespace VetClinic.Api.ViewModels
             CreateMap<PetOwner, PetOwnerViewModel>()
                 .ReverseMap();
 
-
             CreateMap<PetDetail, PetDetailViewModel>()
                 .ReverseMap();
 
@@ -54,15 +53,6 @@ namespace VetClinic.Api.ViewModels
 
             CreateMap<Visit, VisitViewModel>()
                .ReverseMap();
-
-            CreateMap<Customer, CustomerViewModel>()
-                .ReverseMap();
-
-            CreateMap<Product, ProductViewModel>()
-                .ReverseMap();
-
-            CreateMap<Order, OrderViewModel>()
-                .ReverseMap();
         }
     }
 }

@@ -8,6 +8,7 @@ using VetClinic.Core.Enums;
 using VetClinic.Core.Permissions;
 using VetClinic.DAL.Interfaces;
 using VetClinic.DAL.Models;
+using VetClinic.DAL.SeedData;
 
 namespace VetClinic.DAL.DbContexts
 {
@@ -42,7 +43,7 @@ namespace VetClinic.DAL.DbContexts
         {
             if (!await _context.Users.AnyAsync())
             {
-                _logger.LogInformation("Generating default user accounts");
+                _logger.LogInformation("Generating user accounts");
 
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
@@ -53,7 +54,7 @@ namespace VetClinic.DAL.DbContexts
                 await CreateUserAsync("admin", "admin123", "Administrator", "admin@vetclinic.co.za", "+27 (011) 327-6234", new string[] { adminRoleName });
                 await CreateUserAsync("user", "user123", "User also known as Employee", "user@vetclinic.co.za", "+27 (011) 327-6235", new string[] { userRoleName });
 
-                _logger.LogInformation("Default account generation completed");
+                _logger.LogInformation("Account generation completed");
             }
         }
 
@@ -95,143 +96,46 @@ namespace VetClinic.DAL.DbContexts
         }
 
         /// <summary>
-        /// TODO: Seed Breed, AnimalType, PetOwner, PetDetail, Vet, Visit
+        /// Seed Breed, AnimalType, PetOwner, PetDetail, Vet, Visit
         /// </summary>
         /// <returns></returns>
         private async Task SeedDataAsync()
         {
-            if (!await _context.Customers.AnyAsync() && !await _context.ProductCategories.AnyAsync())
+            if (!await _context.PetOwners.AnyAsync() && !await _context.Vets.AnyAsync())
             {
-                _logger.LogInformation("Seeding demo data");
+                _logger.LogInformation("Seeding data");
 
-                Customer cust_1 = new Customer
+                #region Vet Seed Data
+                var Vets = VetMockData.GetSampleVetList();
+
+                foreach(Vet record in Vets)
                 {
-                    Name = "Ebenezer Monney",
-                    Email = "contact@ebenmonney.com",
-                    Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                    await _context.Vets.AddAsync(record);
+                    await _context.SaveChangesAsync();
+                }
+                #endregion
 
-                Customer cust_2 = new Customer
+                #region PetOwner Seed Data
+                var PetOwners = PetOwnerMockData.GetPetOwnerList();
+
+                foreach (PetOwner record in PetOwners)
                 {
-                    Name = "Itachi Uchiha",
-                    Email = "uchiha@narutoverse.com",
-                    PhoneNumber = "+81123456789",
-                    Address = "Some fictional Address, Street 123, Konoha",
-                    City = "Konoha",
-                    Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                    await _context.PetOwners.AddAsync(record);
+                    await _context.SaveChangesAsync();
+                }
+                #endregion
 
-                Customer cust_3 = new Customer
+                #region Visit Seed Data
+                var Visits = VisitMockData.GetSampleVisitList();
+
+                foreach (Visit record in Visits)
                 {
-                    Name = "John Doe",
-                    Email = "johndoe@anonymous.com",
-                    PhoneNumber = "+18585858",
-                    Address = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                    Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet",
-                    City = "Lorem Ipsum",
-                    Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
+                    await _context.Visits.AddAsync(record);
+                    await _context.SaveChangesAsync();
+                }
+                #endregion
 
-                Customer cust_4 = new Customer
-                {
-                    Name = "Jane Doe",
-                    Email = "Janedoe@anonymous.com",
-                    PhoneNumber = "+18585858",
-                    Address = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                    Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet",
-                    City = "Lorem Ipsum",
-                    Gender = Gender.Male,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-
-
-                ProductCategory prodCat_1 = new ProductCategory
-                {
-                    Name = "None",
-                    Description = "Default category. Products that have not been assigned a category",
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-
-
-                Product prod_1 = new Product
-                {
-                    Name = "BMW M6",
-                    Description = "Yet another masterpiece from the world's best car manufacturer",
-                    BuyingPrice = 109775,
-                    SellingPrice = 114234,
-                    UnitsInStock = 12,
-                    IsActive = true,
-                    ProductCategory = prodCat_1,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-                Product prod_2 = new Product
-                {
-                    Name = "Nissan Patrol",
-                    Description = "A true man's choice",
-                    BuyingPrice = 78990,
-                    SellingPrice = 86990,
-                    UnitsInStock = 4,
-                    IsActive = true,
-                    ProductCategory = prodCat_1,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow
-                };
-
-
-
-                Order ordr_1 = new Order
-                {
-                    Discount = 500,
-                    Cashier = await _context.Users.OrderBy(u => u.UserName).FirstAsync(),
-                    Customer = cust_1,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow,
-                    OrderDetails = new List<OrderDetail>()
-                    {
-                        new OrderDetail() {UnitPrice = prod_1.SellingPrice, Quantity=1, Product = prod_1 },
-                        new OrderDetail() {UnitPrice = prod_2.SellingPrice, Quantity=1, Product = prod_2 },
-                    }
-                };
-
-                Order ordr_2 = new Order
-                {
-                    Cashier = await _context.Users.OrderBy(u => u.UserName).FirstAsync(),
-                    Customer = cust_2,
-                    DateCreated = DateTime.UtcNow,
-                    DateModified = DateTime.UtcNow,
-                    OrderDetails = new List<OrderDetail>()
-                    {
-                        new OrderDetail() {UnitPrice = prod_2.SellingPrice, Quantity=1, Product = prod_2 },
-                    }
-                };
-
-
-                _context.Customers.Add(cust_1);
-                _context.Customers.Add(cust_2);
-                _context.Customers.Add(cust_3);
-                _context.Customers.Add(cust_4);
-
-                _context.Products.Add(prod_1);
-                _context.Products.Add(prod_2);
-
-                _context.Orders.Add(ordr_1);
-                _context.Orders.Add(ordr_2);
-
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Seeding demo data completed");
+                _logger.LogInformation("Seeding data completed");
             }
         }
 

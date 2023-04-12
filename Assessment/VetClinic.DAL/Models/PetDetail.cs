@@ -16,14 +16,9 @@ namespace VetClinic.DAL.Models
         [Display(Name = "Animal Type")]
         public AnimalType AnimalType { get; set; }
 
-        //public int AnimalTypeId { get; set; }
-
         [Required]
         public Breed Breed { get; set; }
 
-        public int BreedId { get; set; }
-
-        //[Required]
         public string Owner { get; set; }
 
         public string CreatedBy { get; set; }
@@ -31,8 +26,10 @@ namespace VetClinic.DAL.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
 
+        public bool IsActive { get; set; } = true;
+        public bool IsDeleted { get; set; } = false;
+
         //One to Many relationshp, 1 Owner can have many Pets
-        //public int PetOwnerId { get; set; }
         public PetOwner PetOwner { get; set; }
 
     }

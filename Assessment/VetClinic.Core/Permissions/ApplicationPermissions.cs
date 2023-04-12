@@ -53,12 +53,12 @@ namespace VetClinic.Core.Permissions
             AllPermissions = allPermissions.AsReadOnly();
         }
 
-        public static ApplicationPermission GetPermissionByName(string permissionName)
+        public static ApplicationPermission? GetPermissionByName(string permissionName)
         {
             return AllPermissions.Where(p => p.Name == permissionName).SingleOrDefault();
         }
 
-        public static ApplicationPermission GetPermissionByValue(string permissionValue)
+        public static ApplicationPermission? GetPermissionByValue(string permissionValue)
         {
             return AllPermissions.Where(p => p.Value == permissionValue).SingleOrDefault();
         }
